@@ -1,0 +1,11 @@
+body{
+	background: #ccc;
+}
+.wrap_file{
+	display: inline-block;
+	border: 1px solid #555;
+	padding: 10px;
+	box-sizing: border-box;
+	font-weight: 500;
+}
+
