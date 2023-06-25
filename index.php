@@ -11,83 +11,64 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<?php 
-	if(isset($_FILES['file'])){
-		$result = loadFile(314325, 'images/');
-	?>
-	<div class="alert alert-<?php echo $result['type_msg'];?> alert-dismissible fade show" role="alert">
-	<?php 
-		  echo (isset($result['status']))?
-		  			"<strong>".$result['status']."</strong>"
-		  		:
-		  			'';
-	?>
 
-	<?php echo $result['msg'];?>
-
-
-	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-	
-	<?php
-}
-	?>
+	<form action="index.php" method="POST" enctype="multipart/form-data">
 	<div class="container text-center">
 		<div class="row">
 			<div class="col">
 				<h1>Загрузка картинок</h1>
-				<form class="wrap_file" action="obr.php" method="POST">
-					<div class="mb-3">
-						<input class="form-control" type="file" id="formFile" name="file">
-					</div>
-					<?php 
-					if(isset($_FILES['file'])){
-						$result = loadFile(314325, 'images/');
-					?>
-						<div class="alert alert-<?php echo $result['type_msg'];?> alert-dismissible fade show" role="alert">
-								
-						<?php echo (isset($result['status']))? "<strong>".$result['status']."</strong>":''; ?>
-
-						<?php echo $result['msg'];?>
-
-
-							  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
-							
-							<?php
-						}
-					?>
-					<button type="submit" class="btn btn-primary">Войти</button>
-				</form>
-
-						
-
-
 				
+					<?php 
+					if (isset($_FILES['file'])) {
+						$files = [];
 
-				<form action="obr.php" method="POST" enctype="multipart/form-data">
+						foreach($_FILES['file'] as $key => $link) {
+							foreach($link as $item => $value) {
+								$files[$item][$key] = $value;
+							}
+						}		
+						$_FILES['file'] = $files;	
+					}
+					?>
+
 					<div class="mb-3">
-						<label for="exampleInputEmail1" class="form-label">Логин</label>
-						<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="login">
+						<?php
+							(isset($_FILES['file']))?  $result1 = loadFile(30000, 'images/', 0) :'';
+						?>
+						<div class="alert alert-<?php echo (isset($_FILES['file']))? $result1['type_msg'] :''; ?> alert-dismissible fade show" role="alert">
+							<input class="form-control" type="file" id="formFile" name="file[]">
+							<p><?php echo (isset($_FILES['file']))? $result1['msg'] :''; ?></p>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<?php
+						
+							(isset($_FILES['file']))?  $result2 = loadFile(30000, 'images/', 1) :'';
+							
+						?>
+						<div class="alert alert-<?php echo (isset($_FILES['file']))? $result2['type_msg'] :''; ?> alert-dismissible fade show" role="alert">
+							<input class="form-control" type="file" id="formFile" name="file[]">
+							<p><?php echo (isset($_FILES['file']))? $result2['msg'] :''; ?></p>
+						</div>
 					</div>
 					<div class="mb-3">
-						<label for="formFile" class="form-label">Выберите аватар</label>
-						<input class="form-control" type="file" id="formFile" name="file">
+						<?php
+							(isset($_FILES['file']))?  $result3 = loadFile(30000, 'images/', 2) :'';
+						?>
+						<div class="alert alert-<?php echo (isset($_FILES['file']))? $result3['type_msg'] :''; ?> alert-dismissible fade show" role="alert">
+							<input class="form-control" type="file" id="formFile" name="file[]">
+							<p><?php echo (isset($_FILES['file']))? $result3['msg'] :''; ?></p>
+						</div>
 					</div>
-					<button type="submit" class="btn btn-primary">Войти</button>
+					</div>
+					<button type="submit" class="btn btn-primary">Сохранить</button>
 				</form>
 	
 			</div>
 			
 		</div>
 	</div>
-
-
-	
-
-
-
-
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
